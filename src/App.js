@@ -9,7 +9,7 @@ import PrivateRoute from 'routes/privateRoute';
 import 'react-toastify/dist/ReactToastify.min.css';
 
 toast.configure({
-  autoClose: 6000,
+  autoClose: 3000,
   draggable: false,
   position: "bottom-left"
 });

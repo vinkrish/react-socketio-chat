@@ -170,7 +170,7 @@ function Dashboard(props) {
                   data={users}
                   tableHeader={false} />
               </div>
-              <Spacer size={26}/>
+              <Spacer size={22}/>
               <Button onClick={() => logoutHandler()}>Logout</Button>
             </Col>
             <Col xs="12" sm="10">
@@ -205,7 +205,7 @@ function Dashboard(props) {
                 </div>
                 <div className="message-input-container">
                   <Row>
-                    <Col xs="10">
+                    <Col xs="8" sm="10">
                       <input
                         ref={inputRef}
                         type="text"
@@ -214,8 +214,8 @@ function Dashboard(props) {
                         onChange={({ target: { value } }) => setMessageTyped(value)}
                         onKeyPress={event => event.key === 'Enter' ? sendMessage(event) : null}/>
                     </Col>
-                    <Col xs="2" className="send">
-                      <Button onClick={e => sendMessage(e)}>Send</Button>
+                    <Col xs="4" sm="2" className="send">
+                      <Button style={{float: "right"}} onClick={e => sendMessage(e)}>Send</Button>
                     </Col>
                   </Row>
                 </div>

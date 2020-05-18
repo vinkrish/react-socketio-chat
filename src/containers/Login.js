@@ -23,10 +23,14 @@ class Login extends React.Component {
 
   render() {
     const { handleSubmit } = this.props;
-    const { isLoggingIn, isAuthenticated } = this.props;
+    const { isLoggingIn, isAuthenticated, loginFailed } = this.props;
 
     if (isAuthenticated) {
       return <Redirect to='/' />
+    }
+
+    if (loginFailed) {
+      toast.error("Email and Password don't match!");
     }
 
     return(
@@ -92,12 +96,10 @@ class Login extends React.Component {
 }
 
 const mapStateToProps = state => {
-  if (state.authReducer.actionFailed) {
-    toast.error("Email and Password don't match!");
-  }
+  const loginFailed = state.authReducer.actionFailed;
   const isLoggingIn = state.authReducer.isLoading;
   const isAuthenticated = checkAuthentication(state);
-  return { isLoggingIn, isAuthenticated };
+  return { isLoggingIn, isAuthenticated, loginFailed };
 }
 
 const mapDispatchToProps = {
