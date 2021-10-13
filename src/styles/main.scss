@@ -1,0 +1,333 @@
+// Colors
+$color-primary: #0A467F;
+$color-secondary: #0D5DA8;
+$color-gray: #323232;
+$color-medium-gray: #344251;
+$color-light-gray: #F0EFEF;
+$color-white: #FFFFFF;
+$color-purple: #753972;
+$color-error: #DC3545;
+$td-border: #e6e6e6;
+
+// Fonts
+h1 {
+  font-size: 35px;
+}
+
+h2 {
+  font-size: 30px;
+}
+
+h3 {
+  font-size: 24px;
+}
+
+h4 {
+  font-size: 20px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  font-size: 12px;
+}
+
+.font {
+  &-10 {
+    font-size: 10px;
+  }
+
+  &-12 {
+    font-size: 12px;
+  }
+}
+
+.bold {
+  font-weight: 700;
+}
+
+// Utility
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.no-border {
+  border: none !important;
+}
+
+.row-content {
+  height: 100vh;
+}
+
+.contact-item {
+  padding: 10px 0 10px 10px;
+  border-bottom: 1px solid $td-border;
+}
+
+.logout {
+  display: block;
+  margin: 0 auto;
+}
+
+// Forms
+form {
+  padding: 30px;
+  border: solid #0D5DA8 1px;
+
+  h6 {
+    opacity: 0.75;
+    color: $color-medium-gray;
+  }
+
+  input.form-control,
+  textarea.form-control {
+    border: none;
+    border-bottom: solid 2px $color-primary;
+    border-radius: 0px;
+    line-height: 1;
+    padding: 0px;
+    margin-bottom: 2px;
+
+    &:focus {
+      box-shadow: none;
+      border-bottom: solid 2px $color-secondary;
+    }
+
+    &.input-error {
+      border-bottom: solid 2px $color-error;
+
+      &::placeholder {
+        opacity: 0.75;
+        color: $color-error;
+      }
+    }
+
+    + span.error {
+      color: $color-error;
+      background-color: $color-white;
+      position: absolute;
+      display: block;
+      width: 100%;
+      z-index: 1;
+    }
+  }
+
+  textarea.form-control,
+  textarea.form-control:focus {
+    border: solid 1px $color-primary;
+    padding: 5px;
+
+    &.input-error {
+      border: solid 2px $color-error;
+    }
+  }
+
+  &.auth-form {
+    max-width: 705px;
+    margin: 0 auto;
+  }
+
+  .checkbox  {
+    margin-bottom: 2px;
+
+    h5 {
+      opacity: 0.75;
+    }
+
+    label:not(.input-error) h5 {
+      color: $color-medium-gray;
+    }
+
+    label.input-error h5 {
+      color: $color-error;
+    }
+
+    p.error {
+      color: $color-error;
+      background-color: $color-white;
+      position: absolute;
+      display: block;
+      width: 100%;
+      z-index: 1;
+    }
+  }
+
+  input[type="checkbox"]  {
+    z-index: 1;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+
+    &+ label {
+      position: absolute;
+      left: 40px;
+      top: 0px;
+      z-index: 0;
+      line-height: 20px;
+      pointer-events: none;
+    }
+  }
+
+  // React Select Field
+  .css-yk16xz-control,
+  .css-yk16xz-control:hover,
+  .css-yk16xz-control:focus,
+  .css-1pahdxg-control {
+    border: solid 1px $color-primary;
+    border-radius: 0;
+
+    svg {
+      color: $color-primary;
+    }
+  }
+
+  .css-26l3qy-menu {
+    z-index: 3;
+  }
+
+  .select-input-error {
+    border: solid 2px $color-error;
+
+    .css-yk16xz-control,
+    .css-yk16xz-control:focus,
+    .css-1pahdxg-control,
+    .css-2b097c-container {
+      border: none;
+    }
+
+    + span.error {
+      color: $color-error;
+      background-color: $color-white;
+      position: absolute;
+      display: block;
+      width: 100%;
+      z-index: 1;
+    }
+
+    &::placeholder {
+      opacity: 0.75;
+      color: $color-error;
+    }
+  }
+
+  .css-1okebmr-indicatorSeparator {
+    display: none;
+  }
+
+  .css-tlfecz-indicatorContainer svg {
+    color: $color-primary;
+  }
+
+  &.full-width {
+    max-width: 100%;
+  }
+}
+
+// Buttons
+.btn {
+  border-radius: 0px;
+  border: none;
+  padding: 7px 24px;
+
+  &.btn-primary {
+    background-color: $color-primary;
+
+    &:hover {
+      background-color: $color-secondary;
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+
+    &:not(:disabled):not(.disabled):active:focus {
+      box-shadow: none;
+    }
+  }
+
+  &.btn-secondary {
+    background-color: $color-secondary;
+
+    &:focus {
+      box-shadow: none;
+    }
+
+    &:not(:disabled):not(.disabled):active:focus {
+      box-shadow: none;
+    }
+  }
+
+  &.btn-tertiary {
+    background-color: $color-purple;
+
+    &:focus {
+      box-shadow: none;
+    }
+
+    &:not(:disabled):not(.disabled):active:focus {
+      box-shadow: none;
+    }
+  }
+}
+
+// Root
+#root {
+  color: $color-medium-gray;
+  font-size: 16px;
+  line-height: 24px;
+  font-family: "Roboto", "sans-serif";
+}
+
+.loader-wrapper {
+  width: 100%;
+  height: 100%;
+  background-color: rgba($color: $color-light-gray, $alpha: .75);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9998;
+
+  .spinner-border {
+      top: 50%;
+      opacity: 1;
+      left: 50%;
+      position: absolute;
+      z-index: 9999;
+  }
+}
+
+table {
+  width: 100%;
+  display: block;
+  border-spacing: 0;
+  overflow-y: auto;
+  th {
+    margin: 0;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    color: white;
+    background-color: $color-secondary;
+    font-size: 14px;
+  }
+  tr {
+    :last-child {
+      td {
+        border-bottom: 0;
+      }
+    }
+  }
+  td {
+    margin: 0;
+    padding-left: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    color: black;
+    background-color: white;
+    border-bottom: 1px solid $td-border;
+    font-size: 14px;
+  }
+}
