@@ -37,6 +37,7 @@ export default function(state = initialState, action) {
     saveValueInLocal(constants.FIRST_NAME, action.payload.data.firstName);
     saveValueInLocal(constants.LAST_NAME, action.payload.data.lastName);
     saveValueInLocal(constants.EMAIL, action.payload.data.email);
+    saveValueInLocal(constants.IS_ADMIN, action.payload.data.isAdmin);
     return {
       isLoading: false,
       actionFailed: false

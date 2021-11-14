@@ -98,16 +98,6 @@ class Signup extends React.Component {
                 />
                 <Spacer size={26} />
               </Col>
-              <Col xs="12">
-                <Field 
-                  className="form-control" 
-                  component={reduxFormInput}
-                  name="expert" 
-                  type="checkbox" 
-                  label="Are you an expert ?"
-                />
-                <Spacer size={26} />
-              </Col>
               <Col className="text-center" xs="12">
                 <Link to="/login">Already have an account? Login now.</Link>
               </Col>

@@ -4,6 +4,7 @@ import Spacer from 'components/layout/Spacer';
 import ContactList from 'components/ui/ContactList';
 import { Container, Button, Row, Col } from 'react-bootstrap';
 import { fetchUsers, fetchMessages } from 'redux/actions/user';
+import { fetchTags } from 'redux/actions/config';
 import constants from 'config/constants';
 import { getValueFromLocal, destroyLocal } from 'utils/storage';
 import Loader from "components/ui/Loader";
@@ -18,6 +19,7 @@ const socket = io(SOCKET_IO_URL);
 
 function Dashboard(props) {
   const senderId = getValueFromLocal(constants['USER_ID']);
+  const isAdmin = getValueFromLocal(constants['IS_ADMIN']);
   const [messages, setMessages] = useState([]);
   const [checkedUser, setCheckedUser] = useState(0);
   const [filteredMessages, setFilteredMessages] = useState([]);
@@ -26,13 +28,16 @@ function Dashboard(props) {
   const [readMessage, setReadMessage] = useState('');
   const [typing, setTyping] = useState('');
   const [users, setUsers] = useState([]);
-  const { isLoading, usrs, allMessages } = props;
+  const [tags, setTags] = useState([]);
+  const [selectedTag, setSelectedTag] = useState('');
+  const { isLoading, usrs, allMessages, allTags } = props;
   const inputRef = useRef();
   const messagesEndRef = useRef();
 
   useEffect(() => {
     props.fetchUsers();
     props.fetchMessages();
+    props.fetchTags();
 
     socket.emit('join', {id: senderId});
     socket.on('new_msg', data => {
@@ -77,6 +82,10 @@ function Dashboard(props) {
   }, [allMessages])
 
   useEffect(() => {
+    setTags(allTags);
+  }, [allTags]);
+
+  useEffect(() => {
     setFilteredMessages(messages.filter(msg => msg.receiverId === checkedUser || msg.senderId === checkedUser));
   }, [checkedUser, messages])
 
@@ -94,6 +103,16 @@ function Dashboard(props) {
       setCheckedUser(id);
     }
   }, [checkedUser]);
+
+  const setTag = (event) => {
+    event.preventDefault();
+    setSelectedTag(event.target.value)
+  }
+
+  const submitTag = (event) => {
+    event.preventDefault();
+    setMessageTyped(`${inputRef.current.value.substring(0,inputRef.current.selectionStart)}<${selectedTag}>${inputRef.current.value.substring(inputRef.current.selectionStart, inputRef.current.selectionEnd)}</${selectedTag}>${inputRef.current.value.substring(inputRef.current.selectionEnd)}`);
+  }
 
   const sendMessage = (event) => {
     event.preventDefault();
@@ -174,8 +193,24 @@ function Dashboard(props) {
                   <div ref={messagesEndRef} />
                 </div>
                 <div className="message-input-container">
-                  <Row>
-                    <Col xs="8" sm="10">
+                  <div className="message-div">
+                    { isAdmin === 'true' ? (
+                      <div style={{marginLeft: "10px"}} className="send" >
+                        <select
+                          value={selectedTag}
+                          onChange={setTag}
+                        >
+                          {tags.map((tag) => (
+                            <option key={tag.id} value={tag.name}>
+                              {tag.name}
+                            </option>
+                          ))}
+                        </select>
+                        <button style={{marginLeft: "5px"}} className="plus-btn"
+                          onClick={e => submitTag(e)}>+</button>
+                      </div>): null
+                    }
+                    <div className="message-input">
                       <input
                         ref={inputRef}
                         type="text"
@@ -183,11 +218,11 @@ function Dashboard(props) {
                         value={messageTyped}
                         onChange={({ target: { value } }) => setMessageTyped(value)}
                         onKeyPress={event => event.key === 'Enter' ? sendMessage(event) : null}/>
-                    </Col>
-                    <Col xs="4" sm="2" className="send">
+                    </div>
+                    <div className="send">
                       <Button style={{float: "right"}} onClick={e => sendMessage(e)}>Send</Button>
-                    </Col>
-                  </Row>
+                    </div>
+                  </div>
                 </div>
               </div>
             </Col>
@@ -202,15 +237,18 @@ function Dashboard(props) {
 const mapStateToProps = state => {
   const isLoading = state.userReducer.isLoading.includes('GET_USERS_REQUEST') 
   || state.userReducer.isLoading.includes('GET_MESSAGES_REQUEST')
-  || state.userReducer.isLoading.includes('SEND_MESSAGE_REQUEST');
+  || state.userReducer.isLoading.includes('SEND_MESSAGE_REQUEST')
+  || state.configReducer.isLoading.includes('GET_CONFIG_REQUEST');
   const usrs = state.userReducer.users;
   const allMessages = state.userReducer.messages;
-  return { isLoading, usrs, allMessages };
+  const allTags = state.configReducer.tags;
+  return { isLoading, usrs, allMessages, allTags };
 }
 
 const mapDispatchToProps = {
   fetchUsers,
-  fetchMessages
+  fetchMessages,
+  fetchTags
 }
 
 export default connect(
